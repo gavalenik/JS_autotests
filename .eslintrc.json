@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "plugins": [
+        "wdio"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "airbnb-base",
+        "plugin:wdio/recommended"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-undef": [
+            "off" // "warn" // "error"
+        ],
+        "class-methods-use-this": [0]
+    }
+}

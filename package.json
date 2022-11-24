@@ -1,0 +1,33 @@
+{
+  "name": "js_autotests_coursework",
+  "version": "1.0.0",
+  "description": "Skillbox_JS_autotests_coursework",
+  "main": "index.js",
+  "scripts": {
+    "test": "wdio run wdio.conf.js",
+    "wdio": "wdio run wdio.conf.js",
+    "lint-fix": "eslint --fix ./*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.skillbox.ru/aleksei_gavrilov_3/js_autotests_coursework.git"
+  },
+  "author": "AleksG",
+  "license": "ISC",
+  "devDependencies": {
+    "@wdio/cli": "^7.27.0",
+    "@wdio/devtools-service": "^7.27.0",
+    "@wdio/local-runner": "^7.27.0",
+    "@wdio/mocha-framework": "^7.26.0",
+    "@wdio/spec-reporter": "^7.26.0",
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-wdio": "^7.25.3"
+  },
+  "dependencies": {
+    "devtools": "^7.27.0",
+    "puppeteer": "^19.3.0",
+    "webdriverio": "^7.27.0"
+  }
+}
