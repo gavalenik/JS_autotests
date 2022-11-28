@@ -2,8 +2,7 @@ const Page = require('./page');
 
 class AboutPage extends Page {
   get pageTitle() {
-    const abra = 'О нас';
-    return $(`h2=${abra}`);
+    return $('h2=О нас');
   }
 
   open() {

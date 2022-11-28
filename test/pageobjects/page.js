@@ -6,4 +6,8 @@ module.exports = class Page {
   async expectUrlIs(url) {
     await expect(await browser.getUrl()).toEqual(url);
   }
+
+  async pause(ms) {
+    await browser.pause(ms)
+  }
 };

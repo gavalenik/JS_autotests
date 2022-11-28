@@ -5,11 +5,11 @@ exports.config = {
     ...hooksConfig,
     ...{
         specs: [
-            './test/specs/**/*.js'
+            './test/specs/**/*.js' //'./test/specs/**/*.js'
         ],
         automationProtocol: 'devtools',
         exclude: [],
-        maxInstances: 10,
+        maxInstances: 2,
         capabilities: [{
             maxInstances: 5,
             browserName: 'chrome',

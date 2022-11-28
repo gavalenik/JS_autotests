@@ -1,13 +1,13 @@
-const MainPage = require('../pageobjects/main.page');
-const MenuPage = require('../pageobjects/menu.page');
-const DeliveryPage = require('../pageobjects/delivery.page');
-const PromoPage = require('../pageobjects/promo.page');
-const AboutPage = require('../pageobjects/about.page');
-const CartPage = require('../pageobjects/cart.page');
-const MyAccountPage = require('../pageobjects/myAccount.page');
-const BonusPage = require('../pageobjects/bonus.page');
+const MainPage = require('../../pageobjects/main.page');
+const MenuPage = require('../../pageobjects/menu.page');
+const DeliveryPage = require('../../pageobjects/delivery.page');
+const PromoPage = require('../../pageobjects/promo.page');
+const AboutPage = require('../../pageobjects/about.page');
+const CartPage = require('../../pageobjects/cart.page');
+const MyAccountPage = require('../../pageobjects/myAccount.page');
+const BonusPage = require('../../pageobjects/bonus.page');
 
-describe('Pizzeria. Redirect via main menu.', () => {
+describe('Pizzeria. Redirect via main menu', () => {
   it('TC01. Click menu item "Главная"', async () => {
     await MainPage.open();
 
