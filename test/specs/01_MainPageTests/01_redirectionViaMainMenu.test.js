@@ -1,8 +1,11 @@
 const MainPage = require('../../pageobjects/main.page');
 const MenuPage = require('../../pageobjects/menu.page');
+const PizzaPage = require('../../pageobjects/menuCategories/pizza.page');
+const DesertsPage = require('../../pageobjects/menuCategories/deserts.page');
+const DrinksPage = require('../../pageobjects/menuCategories/drinks.page');
 const DeliveryPage = require('../../pageobjects/delivery.page');
 const PromoPage = require('../../pageobjects/promo.page');
-const AboutPage = require('../../pageobjects/about.page');
+const AboutUsPage = require('../../pageobjects/aboutUs.page');
 const CartPage = require('../../pageobjects/cart.page');
 const MyAccountPage = require('../../pageobjects/myAccount.page');
 const BonusPage = require('../../pageobjects/bonus.page');
@@ -43,8 +46,8 @@ describe('Pizzeria. Redirect via main menu', () => {
     await MainPage.open();
 
     await MainPage.clickMainMenuItem('О нас');
-    await AboutPage.expectPageTitleIsDisplayed();
-    await AboutPage.expectUrlIs('http://pizzeria.skillbox.cc/about/');
+    await AboutUsPage.expectPageTitleIsDisplayed();
+    await AboutUsPage.expectUrlIs('http://pizzeria.skillbox.cc/about/');
   });
 
   it('TC06. Click menu item "Корзина"', async () => {
@@ -75,23 +78,23 @@ describe('Pizzeria. Redirect via main menu', () => {
     await MainPage.open();
 
     await MainPage.clickSubMenuItem('Пицца');
-    await MenuPage.expectPizzaPageTitleIsDisplayed();
-    await MenuPage.expectUrlIs('http://pizzeria.skillbox.cc/product-category/menu/pizza/');
+    await PizzaPage.expectPageTitleIsDisplayed()
+    await PizzaPage.expectUrlIs('http://pizzeria.skillbox.cc/product-category/menu/pizza/');
   });
 
   it('TC10. Click sub menu item "Десерты"', async () => {
     await MainPage.open();
 
     await MainPage.clickSubMenuItem('Десерты');
-    await MenuPage.expectDesertsPageTitleIsDisplayed();
-    await MenuPage.expectUrlIs('http://pizzeria.skillbox.cc/product-category/menu/deserts/');
+    await DesertsPage.expectPageTitleIsDisplayed()
+    await DesertsPage.expectUrlIs('http://pizzeria.skillbox.cc/product-category/menu/deserts/');
   });
 
   it('TC11. Click sub menu item "Напитки"', async () => {
     await MainPage.open();
 
     await MainPage.clickSubMenuItem('Напитки');
-    await MenuPage.expectDrinksPageTitleIsDisplayed();
-    await MenuPage.expectUrlIs('http://pizzeria.skillbox.cc/product-category/menu/drinks/');
+    await DrinksPage.expectPageTitleIsDisplayed();
+    await DrinksPage.expectUrlIs('http://pizzeria.skillbox.cc/product-category/menu/drinks/');
   });
 });

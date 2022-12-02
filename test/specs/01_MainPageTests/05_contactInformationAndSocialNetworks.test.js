@@ -6,8 +6,8 @@ describe('Pizzeria. Contact Information', () => {
     const email = "pizza@fatta.ru"
     await MainPage.open();
 
-    await MainPage.footerContainsPhoneAndEmail(phoneNumber)
-    await MainPage.footerContainsPhoneAndEmail(email)
+    await MainPage.expectFooterContainsPhoneAndEmail(phoneNumber)
+    await MainPage.expectFooterContainsPhoneAndEmail(email)
   });
 
   it('TC02. Facebook link validation', async () => {

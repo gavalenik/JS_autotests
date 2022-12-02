@@ -1,7 +1,7 @@
 const MainPage = require('../../pageobjects/main.page');
 const DeliveryPage = require('../../pageobjects/delivery.page');
 const PromoPage = require('../../pageobjects/promo.page');
-const AboutPage = require('../../pageobjects/about.page');
+const AboutUsPage = require('../../pageobjects/aboutUs.page');
 const CartPage = require('../../pageobjects/cart.page');
 const MyAccountPage = require('../../pageobjects/myAccount.page');
 const BonusPage = require('../../pageobjects/bonus.page');
@@ -68,8 +68,8 @@ describe('Pizzeria. Redirect via footer menu', () => {
     await MainPage.open();
 
     await MainPage.clickFooterMenuItem('О нас');
-    await AboutPage.expectPageTitleIsDisplayed();
-    await AboutPage.expectUrlIs('http://pizzeria.skillbox.cc/about/');
+    await AboutUsPage.expectPageTitleIsDisplayed();
+    await AboutUsPage.expectUrlIs('http://pizzeria.skillbox.cc/about/');
   });
 
   it('TC09. Click footer menu item "Регистрация"', async () => {
