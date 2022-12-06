@@ -5,7 +5,7 @@ class AllItemsPage extends Page {
         return $('h1=Все товары');
     }
 
-    async expectPageTitleIsDisplayed () {
+    async expectPageTitleIsDisplayed() {
         await expect(this.pageTitle).toBeDisplayed()
     }
 

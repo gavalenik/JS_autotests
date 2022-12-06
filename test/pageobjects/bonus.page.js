@@ -1,37 +1,75 @@
 const Page = require('./page');
 
 class BonusPage extends Page {
-  get nameField() {
-    return $('#bonus_username');
-  }
+    get bonusPage() {
+        return $('#bonus_main');
+    }
 
-  get orderCardButton() {
-    return $('#bonus_main .button');
-  }
+    get errorTextField() {
+        return $('#bonus_content');
+    }
 
-  get pageTitle() {
-    return $('h2=Бонусная программа');
-  }
+    get loader() {
+        return $('.loaderPoint');
+    }
 
-  get phoneField() {
-    return $('#bonus_phone');
-  }
+    get nameField() {
+        return $('#bonus_username');
+    }
 
-  get textField() {
-    return $('#bonus_content');
-  }
+    get orderCardButton() {
+        return $('#bonus_main .button');
+    }
 
-  async clickOrderCardButton() {
-    await this.orderCardButton.click()
-  }
+    get pageTitle() {
+        return $('h2=Бонусная программа');
+    }
 
-  async expectPageTitleIsDisplayed() {
-    await expect(this.pageTitle).toBeDisplayed();
-  }
+    get phoneField() {
+        return $('#bonus_phone');
+    }
 
-  open() {
-    return super.open('bonus/');
-  }
+    async clickOrderCardButton() {
+        await this.orderCardButton.click()
+    }
+
+    async expectPageErrorContainsText(errorText) {
+        await expect(this.errorTextField).toHaveTextContaining(errorText)
+    }
+
+    async expectPageTitleIsDisplayed() {
+        await expect(this.pageTitle).toBeDisplayed();
+    }
+
+    async expectPhoneFieldIsRed() {
+        await expect(this.phoneField).toHaveAttribute('style', "border-color: red;")
+    }
+
+    async expectSuccessfulMessageIsDisplayed() {
+        await expect(this.bonusPage).toHaveTextContaining("Ваша карта оформлена!")
+    }
+
+    async expectUserFieldIsRed() {
+        await expect(this.nameField).toHaveAttribute('style', "border-color: red;")
+    }
+
+    async inputName(name) {
+        await this.nameField.clearValue()
+        await this.nameField.addValue(name)
+    }
+
+    async inputPhone(phone) {
+        await this.phoneField.clearValue()
+        await this.phoneField.addValue(phone)
+    }
+
+    open() {
+        return super.open('bonus/');
+    }
+
+    async waitForLoaderDisappeared() {
+        await this.loader.waitForExist({timeout: 7000, reverse: true, timeoutMsg: "Problem with loader disappearing"})
+    }
 }
 
 module.exports = new BonusPage();

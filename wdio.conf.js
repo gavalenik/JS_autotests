@@ -5,16 +5,16 @@ exports.config = {
     ...hooksConfig,
     ...{
         specs: [
-            './test/specs/07*/*.js' //'./test/specs/**/*.js'
+            './test/specs/**/*.js' //'./test/specs/**/*.js'
         ],
         automationProtocol: 'devtools',
         exclude: [],
-        maxInstances: 2,
+        maxInstances: 1,
         capabilities: [{
             maxInstances: 5,
             browserName: 'chrome',
             acceptInsecureCerts: true,
-            'goog:chromeOptions': { args: ['--window-size=1920,1080'] }, //'--headless','--incognito'
+            'goog:chromeOptions': {args: ['--window-size=1920,1080']}, //'--headless','--incognito'
         }],
         // Level of logging verbosity: trace | debug | info | warn | error | silent
         logLevel: 'info',

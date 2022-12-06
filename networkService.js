@@ -114,4 +114,4 @@ class NetworkService {
     }
 }
 
-module.exports = { NetworkService: NetworkService };
+module.exports = {NetworkService: NetworkService};

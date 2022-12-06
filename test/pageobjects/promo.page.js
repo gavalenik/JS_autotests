@@ -5,11 +5,11 @@ class PromoPage extends Page {
         return $('h2=Акции');
     }
 
-    async expectPageTitleIsDisplayed () {
+    async expectPageTitleIsDisplayed() {
         await expect(this.pageTitle).toBeDisplayed()
     }
 
-    async expectPromoCodeIsDisplayed (promoCode) {
+    async expectPromoCodeIsDisplayed(promoCode) {
         await expect($(`//*[@class="content-page"]//*[contains(text(), "${promoCode}")]`)).toBeDisplayed()
     }
 
