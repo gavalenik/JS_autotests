@@ -1,11 +1,10 @@
 const hooksConfig = require('./hooks.config');
-//const { NetworkService } = require('./networkService');
 
 exports.config = {
     ...hooksConfig,
     ...{
         specs: [
-            './test/specs/**/*.js' //'./test/specs/**/*.js'
+            './test/specs/**/*test.js'
         ],
         automationProtocol: 'devtools',
         exclude: [],
@@ -22,12 +21,16 @@ exports.config = {
         // bail (default is 0 - don't bail, run all tests).
         bail: 0,
         baseUrl: '',
-        waitforTimeout: 10000,
+        waitforTimeout: 4000,
         connectionRetryTimeout: 120000,
         connectionRetryCount: 3,
-        services: ['devtools'], //TODO ['devtools', [NetworkService]]
+        services: ['devtools'], //['devtools', [NetworkService]],
         framework: 'mocha',
-        reporters: ['spec'], //TODO Allure
+        reporters: [['allure', {
+            outputDir: 'allure-results',
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: false,
+        }]],
         mochaOpts: {
             ui: 'bdd',
             timeout: 60000

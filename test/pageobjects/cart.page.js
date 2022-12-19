@@ -18,7 +18,7 @@ class CartPage extends Page {
     }
 
     get goToPaymentButton() {
-        return $('=ПЕРЕЙТИ К ОПЛАТЕ');
+        return $('.checkout-button');
     }
 
     get inputPromoCodeField() {
@@ -77,12 +77,12 @@ class CartPage extends Page {
         await this.goToPaymentButton.click()
     }
 
-    async expectErrorIsDisplayed() {
-        await expect(this.errorNotification).toHaveTextContaining("Неверный купон.")
+    async expectErrorIsDisplayed(text) {
+        await expect(this.errorNotification).toHaveTextContaining(text)
     }
 
     async expectCartIsNotEmpty() {
-        await this.product.waitForExist({interval: 4000, timeoutMsg: "Problem with bring back product"})
+        await this.product.waitForExist({timeoutMsg: "Problem with bring back product"})
         await expect(this.product).toBeDisplayed()
     }
 
@@ -133,7 +133,8 @@ class CartPage extends Page {
         await this.inputPromoCodeField.clearValue()
         await this.inputPromoCodeField.addValue(promoCode)
         await this.applyPromoCodeButton.click()
-        await this.waiter.waitForExist({timeout: 4000, interval: 500, reverse: true})
+        await this.waiter.waitForExist()
+        await this.waiter.waitForExist({reverse: true})
     }
 
     open() {
@@ -142,25 +143,19 @@ class CartPage extends Page {
 
     async refreshCart() {
         await this.refreshCartButton.click()
-        await this.waiter.waitForExist({timeout: 4000, reverse: true, timeoutMsg: "Problem with cart refresh!"})
+        await this.waiter.waitForExist({reverse: true, timeoutMsg: "Problem with cart refresh!"})
     }
 
     async removeProductFromCart() {
         await this.removeProductLink.click()
-        await this.waiter.waitForExist({
-            timeout: 4000,
-            timeoutMsg: "Problem with product removing! (BlockUI is not exist)"
-        })
-        await this.waiter.waitForExist({timeout: 4000, reverse: true, timeoutMsg: "Problem with product removing!"})
+        await this.waiter.waitForExist({timeoutMsg: "Problem with product removing! (BlockUI is not exist)"})
+        await this.waiter.waitForExist({reverse: true, timeoutMsg: "Problem with product removing!"})
     }
 
     async removePromoCode() {
         await this.removePromoCodeLink.click()
-        await this.waiter.waitForExist({
-            timeout: 4000,
-            timeoutMsg: "Problem with promo code removing! (BlockUI is not exist)"
-        })
-        await this.waiter.waitForExist({timeout: 4000, reverse: true, timeoutMsg: "Problem with promo code removing"})
+        await this.waiter.waitForExist({timeoutMsg: "Problem with promo code removing! (BlockUI is not exist)"})
+        await this.waiter.waitForExist({timeout: 7000, reverse: true, timeoutMsg: "Problem with promo code removing"})
     }
 
     async restoreProductInCart() {

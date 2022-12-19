@@ -1,9 +1,10 @@
 const MyAccountPage = require('../../pageobjects/myAccount.page');
+const TestHelper = require('../testHelper')
 
 describe('Pizzeria. Authorization process validation', () => {
     afterEach(async () => MyAccountPage.deleteCookies());
 
-    const user = {name: "Bill", email: "js_auto@test.ru", password: "qwerty1234"}
+    const user = TestHelper.user1
 
     it('TC01. Successful authorization with username', async () => {
         await MyAccountPage.open();

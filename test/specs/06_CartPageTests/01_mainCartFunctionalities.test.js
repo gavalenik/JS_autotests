@@ -1,6 +1,7 @@
 const CartPage = require('../../pageobjects/cart.page');
 const AllItemsPage = require('../../pageobjects/allItems.page');
 const MainPage = require('../../pageobjects/main.page');
+const TestHelper = require('../testHelper')
 
 describe('Pizzeria. Main cart functionalities', () => {
     afterEach(async () => CartPage.deleteCookies());
@@ -59,35 +60,24 @@ describe('Pizzeria. Main cart functionalities', () => {
     });
 
     it('TC07. Promo code applying', async () => {
-        const promoCode = "GIVEMEHALYAVA"
-        await MainPage.open();
-
-        await MainPage.addToBasketPizzaNumber(1)
-        await MainPage.clickCartButton()
-        const orderAmountWithoutDiscount = await CartPage.getOrderAmount()
-        await CartPage.inputAndApplyPromoCode(promoCode)
+        const orderAmountWithoutDiscount = await TestHelper.addPizzaToCartAndPromoCodeApplying()
         await CartPage.expectTotalAmountReduceForTenPercent(orderAmountWithoutDiscount)
     });
 
     it('TC08. Apply and delete promo code', async () => {
-        const promoCode = "GIVEMEHALYAVA"
-        await MainPage.open();
-
-        await MainPage.addToBasketPizzaNumber(1)
-        await MainPage.clickCartButton()
-        const orderAmountWithoutDiscount = await CartPage.getOrderAmount()
-        await CartPage.inputAndApplyPromoCode(promoCode)
+        const orderAmountWithoutDiscount = await TestHelper.addPizzaToCartAndPromoCodeApplying()
         await CartPage.removePromoCode()
         await CartPage.expectOrderAmountIsEqualTo(orderAmountWithoutDiscount)
     });
 
     it('TC09. Wrong promo code', async () => {
         const promoCode = "GIVE"
+        const errorText = "Неверный купон."
         await MainPage.open();
 
         await MainPage.addToBasketPizzaNumber(1)
         await MainPage.clickCartButton()
         await CartPage.inputAndApplyPromoCode(promoCode)
-        await CartPage.expectErrorIsDisplayed()
+        await CartPage.expectErrorIsDisplayed(errorText)
     });
 });

@@ -1,24 +1,12 @@
 const RegisterPage = require('../../pageobjects/register.page');
 const MyAccountPage = require('../../pageobjects/myAccount.page');
+const TestHelper = require('../testHelper')
 
 describe('Pizzeria. Register process validation', () => {
     afterEach(async () => RegisterPage.deleteCookies());
 
-    function uniqUserData() {
-        const unixTime = Math.floor(Date.now() / 1000)
-        const randomPart = unixTime.toString().substring(2)
-        return {name: "Bill" + randomPart, email: "js_" + randomPart + "@test.ru", password: "qwerty1234"}
-    }
-
     it('TC01. Successful registration', async () => {
-        const user = uniqUserData()
-
-        await RegisterPage.open();
-        await RegisterPage.inputUsername(user.name)
-        await RegisterPage.inputEmail(user.email)
-        await RegisterPage.inputPassword(user.password)
-        await RegisterPage.clickRegistrationButton()
-        await RegisterPage.expectRegistrationDone()
+        await TestHelper.successfulRegistration()
     });
 
     it('TC02. Empty fields', async () => {
@@ -30,7 +18,7 @@ describe('Pizzeria. Register process validation', () => {
     });
 
     it('TC03. Empty username', async () => {
-        const user = uniqUserData()
+        const user = await TestHelper.uniqUserData()
         const errorText = "Пожалуйста введите корректное имя пользователя."
         await RegisterPage.open();
 
@@ -40,7 +28,7 @@ describe('Pizzeria. Register process validation', () => {
     });
 
     it('TC04. Empty password', async () => {
-        const user = uniqUserData()
+        const user = await TestHelper.uniqUserData()
         const errorText = "Введите пароль для регистрации."
         await RegisterPage.open();
 
@@ -51,7 +39,7 @@ describe('Pizzeria. Register process validation', () => {
     });
 
     it('TC05. Email more than 20 symbols', async () => {
-        const user = uniqUserData()
+        const user = await TestHelper.uniqUserData()
         const email = "js_auto1234567890@test.ru"
         const errorText = "Максимальное допустимое количество символов: 20"
         await RegisterPage.open();
@@ -63,7 +51,7 @@ describe('Pizzeria. Register process validation', () => {
     });
 
     it('TC06. Username more than 20 symbols', async () => {
-        const user = uniqUserData()
+        const user = await TestHelper.uniqUserData()
         const username = "Bill12345679801234567890"
         const errorText = "Максимальное допустимое количество символов: 20"
         await RegisterPage.open();
@@ -75,7 +63,7 @@ describe('Pizzeria. Register process validation', () => {
     });
 
     it('TC07. Input existing username', async () => {
-        const user = uniqUserData()
+        const user = await TestHelper.uniqUserData()
         const existingUsername = "Bill"
         const errorText = "Учетная запись с таким именем пользователя уже зарегистрирована."
         await RegisterPage.open();
@@ -88,7 +76,7 @@ describe('Pizzeria. Register process validation', () => {
     });
 
     it('TC08. Input existing email', async () => {
-        const user = uniqUserData()
+        const user = await TestHelper.uniqUserData()
         const existingEmail = "js_auto@test.ru"
         const errorText = "Учетная запись с такой почтой уже зарегистировавана."
         await RegisterPage.open();
@@ -101,7 +89,7 @@ describe('Pizzeria. Register process validation', () => {
     });
 
     it.skip('TC09. **BUG** Redirect to my account page after input existing email', async () => {
-        const user = {name: "Bill", email: "js_auto@test.ru", password: "qwerty1234"}
+        const user = TestHelper.user1
         await RegisterPage.open();
 
         await RegisterPage.inputUsername(user.name)

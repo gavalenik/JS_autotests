@@ -1,10 +1,10 @@
 const PromoPage = require('../../pageobjects/promo.page');
+const TestHelper = require('../testHelper')
 
 describe('Pizzeria. Page text validation', () => {
     it('TC01. Promo code is displayed', async () => {
-        const promoCode = "GIVEMEHALYAVA"
         await PromoPage.open();
 
-        await PromoPage.expectPromoCodeIsDisplayed(promoCode)
+        await PromoPage.expectPromoCodeIsDisplayed(TestHelper.promoCode)
     });
 });

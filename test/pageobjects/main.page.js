@@ -46,7 +46,7 @@ class MainPage extends Page {
         await elem.moveTo()
         await elem.waitForClickable()
         await elem.click()
-        await this.pageLoader.waitForExist({timeout: 4000, reverse: true, timeoutMsg: "Problem with page loader!"})
+        await this.pageLoader.waitForExist({reverse: true, timeoutMsg: "Problem with page loader!"})
     }
 
     async clickButtonScrollPageUp() {

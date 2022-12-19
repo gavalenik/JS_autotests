@@ -23,8 +23,19 @@ class NetworkService {
     static requests = [];
     static responses = [];
 
-    objectsComparingProcessing(object1, object2) {
-        for (var key in object2) {
+    lookForOurRequest(object1, object2) {
+        if (Array.isArray(object1)) {
+            const result = object1.filter((item) => {
+                return this.objectsComparing(item, object2);
+            });
+            return result.length > 0;
+        } else {
+            return this.objectsComparing(object1, object2);
+        }
+    }
+
+    objectsComparing(object1, object2) {
+        for (let key in object2) {
             if (object1[key] !== object2[key]) {
                 return false;
             }
@@ -32,85 +43,73 @@ class NetworkService {
         return true;
     }
 
-    firstObjContainsAllKeysOfSecondObj(object1, object2) {
-        if (Array.isArray(object1)) {
-            const result = object1.filter((item) => {
-                return this.objectsComparingProcessing(item, object2);
-            });
-            if (result.length > 0) return true;
-            else return false;
-        } else {
-            return this.objectsComparingProcessing(object1, object2);
-        }
+    async urlIsNeeded(requestUrl, urls) {
+        let flag = false
+        urls.forEach((url) => {
+            if (requestUrl.includes(url)) flag = true
+        });
+        return flag
     }
 
-    before() {
-        browser.addCommand('networkSubscribe', async () => {
-            await global.page.on('request', (request) => {
-                const requestUrl = request.url();
-                if (requestUrl.includes('https://skillbox.ru/api')) {
-                    const requestQueryParams = Object.fromEntries(
-                        new URLSearchParams(requestUrl),
+    async before() {
+        const puppeteer = await browser.getPuppeteer();
+        global.page = (await puppeteer.pages())[0];
+        const urls = ['product-category/menu/pizza/']
+
+        await page.on('request', async (request) => {
+            const requestUrl = request.url();
+
+            if (await this.urlIsNeeded(requestUrl, urls)) {
+                const requestQueryParams = Object.fromEntries(new URLSearchParams(requestUrl));
+                NetworkService.requests.push(
+                    new Request(requestUrl, request.postData(), requestQueryParams, request.headers()),
+                );
+            }
+        });
+
+        await page.on('response', async (response) => {
+            if (await this.urlIsNeeded(response.url(), urls)) {
+                const responseBody = (await response.json()).data;
+                NetworkService.responses.push(
+                    new Response(response.url(), responseBody, response.headers()),
+                );
+            }
+        });
+
+        browser.addCommand('waitForRequestCustom', async (requestData) => {
+            const defaultValues = {url: '', postData: undefined, queryParams: {}, headers: {}}
+            const request = {...defaultValues, ...requestData}
+            let result = [];
+
+            await browser.waitUntil(() => {
+                result = NetworkService.requests.filter((item) => {
+                    return (
+                        item.url === request.url &&
+                        item.postData === request.postData &&
+                        this.lookForOurRequest(item.queryParams, request.queryParams) &&
+                        this.lookForOurRequest(item.headers, request.headers)
                     );
-                    NetworkService.requests.push(
-                        new Request(
-                            requestUrl,
-                            request.postData(),
-                            requestQueryParams,
-                            request.headers(),
-                        ),
-                    );
-                }
-            });
-            await global.page.on('response', async (response) => {
-                if (response.url().includes('https://skillbox.ru/api')) {
-                    const responseBody = (await response.json()).data;
-                    NetworkService.responses.push(
-                        new Response(response.url(), responseBody, response.headers()),
-                    );
-                }
+                });
+                return result.length >= 1
             });
         });
 
-        browser.addCommand(
-            'waitForRequest',
-            async (url = '', postData = null, queryParams = {}, headers = {}) => {
-                let result = [];
-                await browser.waitUntil(() => {
-                    result = NetworkService.requests.filter((item) => {
-                        return (
-                            item.url === url &&
-                            item.postData == postData &&
-                            this.firstObjContainsAllKeysOfSecondObj(
-                                item.queryParams,
-                                queryParams,
-                            ) &&
-                            this.firstObjContainsAllKeysOfSecondObj(item.headers, headers)
-                        );
-                    });
-                    if (result.length < 1) return false;
-                    else return true;
-                }, 2000);
-            },
-        );
+        browser.addCommand('waitForResponseCustom', async (responseData) => {
+            const defaultValues = {url: '', body: {}, headers: {}}
+            const response = {...defaultValues, ...responseData}
+            let result = [];
 
-        browser.addCommand(
-            'waitForResponse',
-            async (url = '', body = {}, headers = {}) => {
-                let result = [];
-                await browser.waitUntil(() => {
-                    result = NetworkService.responses.filter((item) => {
-                        return (
-                            item.url === url &&
-                            this.firstObjContainsAllKeysOfSecondObj(item.body, body) &&
-                            this.firstObjContainsAllKeysOfSecondObj(item.headers, headers)
-                        );
-                    });
-                    if (result.length < 1) return false;
-                    else return true;
-                }, 2000);
-            },
-        );
+            await browser.waitUntil(() => {
+                result = NetworkService.responses.filter((item) => {
+                    return (
+                        item.url === response.url &&
+                        this.lookForOurRequest(item.body, response.body) &&
+                        this.lookForOurRequest(item.headers, response.headers)
+                    );
+                });
+                return result.length >= 1;
+            });
+        });
     }
 }
 

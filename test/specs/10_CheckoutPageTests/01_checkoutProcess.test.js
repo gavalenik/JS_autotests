@@ -1,29 +1,39 @@
 const MainPage = require('../../pageobjects/main.page');
-const CartPage = require('../../pageobjects/cart.page');
 const CheckoutPage = require('../../pageobjects/checkout.page');
+const TestHelper = require('../testHelper')
 
 describe('Pizzeria. Checkout process validation', () => {
 
-    const user2 = {name: "Billy", email: "js_auto2@test.ru", password: "qwerty1234"}
+    afterEach(async () => {
+        await MainPage.deleteCookies()
+    });
 
-    it('TC01. Login via checkout page',async () => {
-        await MainPage.open()
-        await MainPage.addToBasketPizzaNumber(1)
-        await MainPage.clickCartButton()
-        await CartPage.clickGoToPaymentButton()
-        await CheckoutPage.clickAuthorizationLink()
-        await CheckoutPage.inputUsername(user2.name)
-        await CheckoutPage.inputPassword(user2.password)
-        await CheckoutPage.clickLoginButton()
-        await CheckoutPage.expectCheckoutDetailsPageDisplayed()
-    })
-
-    it('TC02. Promo code applying', async () => {
-        const promoCode = "GIVEMEHALYAVA"
-        await CheckoutPage.open();
+    it('TC01. Promo code applying', async () => {
+        await TestHelper.addPizzaToCartAndAuthorization()
 
         const orderAmountBeforeDiscount = await CheckoutPage.getOrderAmount()
-        await CheckoutPage.applyPromoCode(promoCode)
+        await CheckoutPage.applyPromoCode(TestHelper.promoCode)
         await CheckoutPage.expectOrderAmountIs10PercentLess(orderAmountBeforeDiscount)
+    });
+
+    it('TC02. Order is completed, payment via bank', async () => {
+        await TestHelper.addPizzaToCartAndAuthorization()
+
+        await TestHelper.inputUserData()
+        await CheckoutPage.clickPlaceOrderButton()
+        await CheckoutPage.expectOrderIsAccepted()
+    });
+
+    it('TC03. Order is completed, payment via cash', async () => {
+        const dateOfOrder = "01221999" //mmDDyyyy
+        const comment = "Just for test"
+        await TestHelper.addPizzaToCartAndAuthorization()
+
+        await TestHelper.inputUserData()
+        await CheckoutPage.choosePaymentCashWithDelivery()
+        await CheckoutPage.inputDateOfOrder(dateOfOrder)
+        await CheckoutPage.inputComment(comment)
+        await CheckoutPage.clickPlaceOrderButton()
+        await CheckoutPage.expectOrderIsAccepted()
     });
 });
