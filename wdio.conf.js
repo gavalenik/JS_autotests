@@ -6,6 +6,17 @@ exports.config = {
         specs: [
             './test/specs/**/*test.js'
         ],
+        suites: {
+            regression: [
+                './test/specs/01_MainPageTests/04_addingItemToBasket_scrollingPizzasAndPage.test.js',
+                './test/specs/06_CartPageTests/01_mainCartFunctionalities.test.js',
+                './test/specs/08_RegisterPageTests/01_registrationProcess.test.js'
+            ],
+            networkTests: [
+                './test/specs/11_NetworkTests/01_onlyOnePizzaOnMainPage.test.js',
+                './test/specs/11_NetworkTests/02_500ErrorDuringPromoCodeApplying.test.js'
+            ]
+        },
         automationProtocol: 'devtools',
         exclude: [],
         maxInstances: 1,

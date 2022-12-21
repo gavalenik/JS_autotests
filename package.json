@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "wdio run wdio.conf.js",
-    "wdio": "wdio run wdio.conf.js",
-    "lint-fix": "eslint --fix ./*.js"
+    "lint-fix": "eslint --fix ./*.js",
+    "regression": "wdio wdio.conf.js --suite regression",
+    "network": "wdio wdio.conf.js --suite networkTests",
+    "e2e": "wdio wdio.conf.js --spec ./test/specs/10_CheckoutPageTests/01_checkoutProcess.test.js"
   },
   "repository": {
     "type": "git",
