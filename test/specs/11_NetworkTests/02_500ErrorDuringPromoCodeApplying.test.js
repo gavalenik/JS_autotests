@@ -1,4 +1,5 @@
 const TestHelper = require("../testHelper");
+const CartPage = require('../../pageobjects/cart.page')
 const {respondHeaders, respondData} = require("./02_respondData")
 
 describe('Pizzeria. Network tests. Cart', () => {
@@ -13,7 +14,7 @@ describe('Pizzeria. Network tests. Cart', () => {
         page.on('request', (request) => {
             if (request.url().includes(url)) {
                 request.respond({
-                    status: 500,
+                    status: 201, //500 - message is not displayed on a page
                     headers: respondHeaders,
                     contentType: 'text/html',
                     body: respondData

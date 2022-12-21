@@ -107,10 +107,6 @@ class CartPage extends Page {
 
     async expectTotalAmountReduceForTenPercent(orderAmount) {
         const currentTotalAmount = await this.getOrderAmount()
-        console.log(currentTotalAmount)
-        console.log(typeof (currentTotalAmount))
-        console.log(orderAmount - (orderAmount / 10))
-        console.log(typeof (orderAmount))
         await expect(currentTotalAmount).toEqual(orderAmount - (orderAmount / 10))
     }
 
@@ -125,8 +121,9 @@ class CartPage extends Page {
     }
 
     async increaseProductQuantity() {
+        const qnt = await this.productQuantity.getValue()
         await this.productQuantity.clearValue()
-        await this.productQuantity.addValue("2")
+        await this.productQuantity.addValue(parseInt(qnt) + 1)
     }
 
     async inputAndApplyPromoCode(promoCode) {
@@ -134,7 +131,7 @@ class CartPage extends Page {
         await this.inputPromoCodeField.addValue(promoCode)
         await this.applyPromoCodeButton.click()
         await this.waiter.waitForExist()
-        await this.waiter.waitForExist({reverse: true})
+        await this.waiter.waitForExist({timeout: 7000, reverse: true})
     }
 
     open() {
@@ -149,7 +146,7 @@ class CartPage extends Page {
     async removeProductFromCart() {
         await this.removeProductLink.click()
         await this.waiter.waitForExist({timeoutMsg: "Problem with product removing! (BlockUI is not exist)"})
-        await this.waiter.waitForExist({reverse: true, timeoutMsg: "Problem with product removing!"})
+        await this.waiter.waitForExist({timeout: 7000, reverse: true, timeoutMsg: "Problem with product removing!"})
     }
 
     async removePromoCode() {
@@ -159,15 +156,6 @@ class CartPage extends Page {
     }
 
     async restoreProductInCart() {
-        // await this.restoreProductLink.waitUntil(async function () { // custom wait for page scrolling stop
-        //   let yPositionCurrent = 0
-        //   while (true) {
-        //     const coordination = await this.getLocation()
-        //     const yPositionNew = coordination.y
-        //     if (yPositionNew === yPositionCurrent) return true
-        //     else yPositionCurrent = yPositionNew
-        //   }
-        // }, {timeout: 4000, timeoutMsg: "Problem with page scrolling"})
         await this.restoreProductLink.click()
     }
 }
