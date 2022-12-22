@@ -1,0 +1,65 @@
+stages:
+  - build
+  - deploy
+  - switch
+  - test
+
+include:
+  - local: '.templates.yml'
+
+variables:
+  PUP_IMAGE: buildkite/puppeteer
+#  npm_config_cache: '$CI_PROJECT_DIR/.npm'
+
+#cache:
+#  key: ${CI_COMMIT_REF_SLUG}
+#  paths:
+#    - node_modules
+#    - build
+
+default:
+  tags:
+    - students
+
+
+build project:
+  stage: build
+  script:
+    - echo Job ["$CI_JOB_NAME"] has been started
+
+development:
+  stage: deploy
+  extends: .development_job_template
+
+staging:
+  stage: deploy
+  extends: .release_job_template
+
+prod:
+  stage: deploy
+  only:
+    - master
+  script:
+    - echo Job ["$CI_JOB_NAME"] has been started
+
+staging switch:
+  stage: switch
+  extends: .release_job_template
+  dependencies:
+    - staging
+
+smoke tests:
+  image: $PUP_IMAGE
+  stage: test
+  extends: .development_job_template
+  script:
+    - npm i
+    - npm run smoke
+
+regression tests:
+  image: $PUP_IMAGE
+  stage: test
+  extends: .release_job_template
+  script:
+    - npm i
+    - npm run test

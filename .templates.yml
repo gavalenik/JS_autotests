@@ -1,0 +1,12 @@
+.development_job_template:
+  except:
+    - master
+    - /^release\/.*/
+  script:
+    - echo Job ["$CI_JOB_NAME"] has been started
+
+.release_job_template:
+  only:
+    - /^release\/.*/
+  script:
+    - echo Job ["$CI_JOB_NAME"] has been started
