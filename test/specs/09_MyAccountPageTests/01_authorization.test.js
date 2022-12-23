@@ -6,7 +6,7 @@ describe('Pizzeria. Authorization process validation', () => {
 
     const user = TestHelper.user1
 
-    it('TC01. Successful authorization with username', async () => {
+    it('TC01 [smoke_test]. Successful authorization with username', async () => {
         await MyAccountPage.open();
 
         await MyAccountPage.inputUsername(user.name)

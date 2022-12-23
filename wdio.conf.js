@@ -9,11 +9,10 @@ exports.config = {
         suites: {
             regression: [
                 './test/specs/01_MainPageTests/04_addingItemToBasket_scrollingPizzasAndPage.test.js',
-                './test/specs/06_CartPageTests/01_mainCartFunctionalities.test.js',
-                './test/specs/08_RegisterPageTests/01_registrationProcess.test.js'
+                './test/specs/09_MyAccountPageTests/01_authorization.test.js'
             ],
             networkTests: [
-                './test/specs/11_NetworkTests/01_onlyOnePizzaOnMainPage.test.js',
+                './test/specs/11_NetworkTests/01_noPizzasOnPizzasPage.test.js',
                 './test/specs/11_NetworkTests/02_500ErrorDuringPromoCodeApplying.test.js'
             ]
         },
@@ -24,7 +23,7 @@ exports.config = {
             maxInstances: 5,
             browserName: 'chrome',
             acceptInsecureCerts: true,
-            'goog:chromeOptions': {args: ['--window-size=1920,1080']}, //'--headless','--incognito'
+            'goog:chromeOptions': {args: ['--window-size=1920,1080', '--headless']}, //'--incognito'
         }],
         // Level of logging verbosity: trace | debug | info | warn | error | silent
         logLevel: 'info',

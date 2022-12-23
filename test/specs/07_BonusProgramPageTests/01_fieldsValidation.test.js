@@ -2,7 +2,7 @@ const BonusPage = require('../../pageobjects/bonus.page');
 const TestHelper = require('../testHelper')
 
 describe('Pizzeria. Bonus program fields validation', () => {
-    it('TC01. Both fields are correct', async () => {
+    it('TC01. Successful registration', async () => {
         const name = TestHelper.user1.name
         const phone = TestHelper.user1.phone
         await BonusPage.open();

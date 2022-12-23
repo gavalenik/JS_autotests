@@ -1,7 +1,7 @@
 const MainPage = require('../../pageobjects/main.page');
 
 describe('Pizzeria. Add item to basket. Scrolling pizzas and page', () => {
-    it('TC01. Add pizza to basket', async () => {
+    it('TC01 [smoke_test]. Add pizza to cart', async () => {
         const pizzaNumber = 2
         await MainPage.open();
 

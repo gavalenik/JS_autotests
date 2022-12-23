@@ -17,7 +17,7 @@ describe('Pizzeria. Contact Information', () => {
         await MainPage.socialNetworkElementHasLink("Facebook", socialNetworkLink)
     });
 
-    it('TC03. ВКонтакте link validation', async () => {
+    it('TC03. VKontakte link validation', async () => {
         const socialNetworkLink = "https://vk.com/skillbox"
         await MainPage.open();
 

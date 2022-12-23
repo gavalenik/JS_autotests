@@ -2,7 +2,7 @@ const MainPage = require('../../pageobjects/main.page');
 const ItemPage = require('../../pageobjects/item.page');
 
 describe('Pizzeria. Redirect via search and items click', () => {
-    it('TC01. Search for "Булочка"', async () => {
+    it('TC01 [smoke_test]. Search for "Булочка"', async () => {
         const itemName = "Булочка"
         await MainPage.open();
 
