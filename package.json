@@ -9,7 +9,8 @@
     "smoke": "wdio wdio.conf.js --mochaOpts.grep smoke_test",
     "regression": "wdio wdio.conf.js --suite regression",
     "network": "wdio wdio.conf.js --suite networkTests",
-    "e2e": "wdio wdio.conf.js --spec ./test/specs/10_CheckoutPageTests/01_checkoutProcess.test.js"
+    "e2e": "wdio wdio.conf.js --spec ./test/specs/10_CheckoutPageTests/01_checkoutProcess.test.js",
+    "selenoid": "wdio wdio-selenoid.conf.js --suite regression"
   },
   "repository": {
     "type": "git",
