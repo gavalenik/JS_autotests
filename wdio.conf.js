@@ -20,10 +20,11 @@ exports.config = {
         exclude: [],
         maxInstances: 1,
         capabilities: [{
-            maxInstances: 5,
+            maxInstances: 1,
             browserName: 'chrome',
             acceptInsecureCerts: true,
-            'goog:chromeOptions': {args: ['--window-size=1920,1080', '--headless']}, //'--incognito'
+            'goog:chromeOptions': {args: ['--window-size=1920,1080']}, // '--headless' '--incognito'
+            'wdio:devtoolsOptions':{headless: true}
         }],
         // Level of logging verbosity: trace | debug | info | warn | error | silent
         logLevel: 'info',
@@ -36,7 +37,7 @@ exports.config = {
         connectionRetryCount: 3,
         services: ['devtools'], //['devtools', [NetworkService]],
         framework: 'mocha',
-        reporters: [['allure', {
+        reporters: ['spec', ['allure', {
             outputDir: 'allure-results',
             disableWebdriverStepsReporting: true,
             disableWebdriverScreenshotsReporting: false,
