@@ -1,17 +1,17 @@
-const Page = require('../page');
+const Page = require('../page')
 
 class DrinksPage extends Page {
-    get pageTitle() {
-        return $('h1=Напитки');
-    }
+  get pageTitle () {
+    return $('h1=Напитки')
+  }
 
-    async expectPageTitleIsDisplayed() {
-        await expect(this.pageTitle).toBeDisplayed();
-    }
+  async expectPageTitleIsDisplayed () {
+    await expect(this.pageTitle).toBeDisplayed()
+  }
 
-    open() {
-        return super.open('product-category/menu/drinks/');
-    }
+  open () {
+    return super.open('product-category/menu/drinks/')
+  }
 }
 
-module.exports = new DrinksPage();
+module.exports = new DrinksPage()
